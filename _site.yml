@@ -1,0 +1,9 @@
+name: "Basic Web Page" 
+output_dir: "."
+navbar: 
+  title: "Lauren Murray" 
+  left: 
+    - text: "Home" 
+      href: index.html 
+    - text: "bookdown" 
+      href: bookdown.html
