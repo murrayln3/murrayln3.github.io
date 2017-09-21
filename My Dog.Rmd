@@ -4,8 +4,23 @@ title: "My Dog"
 output: html_document
 ---
 
-This page is dedicated to my dog Quinn and lots of cute pictures of her. 
+This page is dedicated to my sweet girl Quinn! I rescued her some people in my howetown who didn't take very good care of her. I have had her for about a year, and she is 1.5 years old now. She is a black and tan and english coonhound mix, and she is a sweet little angel baby! Please scroll through my page to see how cute and funny she is. 
+
 ```{r, echo = FALSE}
-knitr::include_graphics("./app state image.jpg")
+knitr::include_graphics("./dog pictures/quinn1.JPG") 
+knitr::include_graphics("./dog pictures/quinn2.JPG") 
+knitr::include_graphics("./dog pictures/quinn3.JPG")  
+knitr::include_graphics("./dog pictures/quinn4.jpg")  
+knitr::include_graphics("./dog pictures/quinn5.JPG")  
+knitr::include_graphics("./dog pictures/quinn6.JPG") 
+knitr::include_graphics("./dog pictures/quinn7.JPG") 
+knitr::include_graphics("./dog pictures/quinn8.PNG")  
+knitr::include_graphics("./dog pictures/quinn9.JPG")  
+knitr::include_graphics("./dog pictures/quinn10.PNG")
+knitr::include_graphics("./dog pictures/quinn11.JPG") 
+knitr::include_graphics("./dog pictures/quinn12.JPG") 
+knitr::include_graphics("./dog pictures/quinn13.JPG") 
+knitr::include_graphics("./dog pictures/quinn14.PNG")  
+knitr::include_graphics("./dog pictures/quinn15.JPG") 
 
 ```
