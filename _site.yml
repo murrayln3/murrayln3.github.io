@@ -6,7 +6,15 @@ navbar:
     - text: "Home" 
       href: index.html 
     - text: "About" 
-      href: about.html
+      href: about.html 
+    - text: "Friends and Family" 
+      href: Friends_and_Family.html 
+    - text: "My Dog" 
+      href: My_Dog.html 
+    - text: "Hobbies" 
+      href: hobbies.html
+    - text: "Music, Movies, and TV"
+      href: media.html
 output: 
   html_document: 
     theme: yeti 

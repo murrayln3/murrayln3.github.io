@@ -1,0 +1,10 @@
+---
+title: "My Friends and Family"
+output: html_document
+---
+
+This is going to be a page dedicated to my friends and family and descriptions of them. 
+```{r, echo = FALSE}
+knitr::include_graphics("./app state image.jpg")
+
+```

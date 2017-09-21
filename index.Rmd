@@ -3,11 +3,10 @@ title: "Welcome!"
 output: html_document
 ---
 
-My name is Lauren Murray, and I am senior mathematics major  here at Appalachian State University.
+Welcome to my webiste! My name is Lauren Murray, and I am senior mathematics major here at Appalachian State University. Click through the menu to learn more about me!
 
 ```{r, echo = FALSE}
-knitr::include_graphics("./brevard.jpg")
+knitr::include_graphics("./app state image.jpg")
 
 ```
-
 
