@@ -8,7 +8,6 @@ This page is dedicated to my sweet girl Quinn! I rescued her some people in my h
 
 ```{r, echo = FALSE}
 knitr::include_graphics("./dog pictures/quinn1.JPG") 
-knitr::include_graphics("./dog pictures/quinn2.JPG") 
 knitr::include_graphics("./dog pictures/quinn3.JPG")  
 knitr::include_graphics("./dog pictures/quinn4.jpg")  
 knitr::include_graphics("./dog pictures/quinn5.JPG")  
