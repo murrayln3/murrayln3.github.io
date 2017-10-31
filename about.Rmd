@@ -3,7 +3,7 @@ title: "About Me"
 output: html_document
 --- 
 
-Here will be a short description of what the other pages will hold: family and friends, hometown, my dog, my hobbies, music + TV + movie tastes, Favorite places to eat in Boone. 
+Hello! I am a senior mathematics major here at App State. My hobbies include hiking, running,and hanging out with my friends and my dog. I have included some pictures of my life.
 ```{r, echo = FALSE}
 knitr::include_graphics("./app state image.jpg")
 

@@ -234,14 +234,7 @@ $(document).ready(function () {
 <li><a href="#average-trip-duration">Average Trip Duration</a></li>
 <li><a href="#number-of-trips-by-day-of-week">Number of Trips by Day of Week</a></li>
 <li><a href="#number-of-trips-by-time-of-day">Number of Trips by Time of Day</a></li>
-<li><a href="#number-of-trips-by-member-type">Number of Trips by Member Type</a></li>
-<li><a href="#trip-duration-by-member-type">Trip Duration by Member Type</a></li>
-<li><a href="#member-demographics">Member Demographics</a></li>
-<li><a href="#trip-routes">Trip Routes</a></li>
-<li><a href="#station-by-trip-departure-and-arrival">Station by Trip Departure and Arrival</a></li>
-<li><a href="#station-usage">Station Usage</a></li>
 </ul></li>
-<li><a href="#exploring-the-weather-dataset">Exploring the Weather Dataset</a></li>
 </ul></li>
 </ul>
 </div>
@@ -533,123 +526,6 @@ ggplot(aes(x = wd, y = N, color = Season, group = Season)) + geom_point() + geom
 <p>How about time of day? Are people using these around commuting times during the week and later on weekends?</p>
 <p>Wow, looks like regardless of the season, people are commuting to/from work using this service (there’s a spike between 8 and 10 AM and another between 4 and 7 PM Monday through Friday). But the weekends seem to be popular between 10 AM and 10 PM.</p>
 </div>
-<div id="number-of-trips-by-member-type" class="section level3">
-<h3>Number of Trips by Member Type</h3>
-<p>I wonder if different types of members (those who have a membership vs. those that bought a 24 hour or 3 day pass) vary in the number of trips they take.</p>
-<p>If I were to guess, I’d think the short-term passes would be ideal for tourists or people looking for a quick weekend trip, whereas members may be more likely to continue using the service year-round. Let’s check out my assumptions by plotting, once again colored by season.</p>
-<p>Surprisingly (to me, at least), different types of users seem to follow similar patterns of usage. Spring and Summer are definitely the most popular times for anyone to ride a bike in the Seattle area.</p>
-</div>
-<div id="trip-duration-by-member-type" class="section level3">
-<h3>Trip Duration by Member Type</h3>
-<p>While it may seem that the trip duration shouldn’t vary widely by member type, a quick look at Pronto!’s pricing structure may make you reconsider that assumption. You see, while you have to purchase either an annual membership ($85/year), a 24-Hour Pass ($8) or a 3-Day Pass ($16) there is still a cap on the duration of your trip. For members, any ride under 45 minutes is free, but any ride going over 45 minutes will incur a fee of $2 for every additional 30 minutes. For short-term users, any ride under 30 minutes is free, but going over that time limit would cost you an additional $2 for the first 30 minutes and $5 for each additional 30 minutes after that!</p>
-<p>Let’s see if these time limits cause differing behaviors in our users.</p>
-<p>Ok, so our members are pretty good about making sure that they return their bike before they incur extra charges, but the short-term pass holders frequently go over their time limit. I wonder how the cost of a trip varies for members and pass holders. Let’s try to calculate the cost of a trip.</p>
-<p>That was a complicated nested if/else statement! Let’s see how much these folks are paying in additional fees!</p>
-<p>Looks like short-term pass holders (who are already paying a higher price per day of biking), are also paying lots of extra fees. This could be because they are unfamiliar with the pricing structure and don’t realize they need to return their bike to a station within 30 minutes without getting charged. It is also possible that short-term users may be tourists who don’t know their way around as easily, and thus can’t find their way to a station within the time limit.</p>
-</div>
-<div id="member-demographics" class="section level3">
-<h3>Member Demographics</h3>
-<p>We only seem to have age and gender information about people who have an annual Pronto! membership, so we can at least take a look at what types of people use this service.</p>
-<p>Let’s look first at age.</p>
-<pre class="r"><code>trip_2$usertype &lt;- as.factor(trip_2$usertype)
-trip_age &lt;- trip_2 %&gt;% mutate(age = year(start_dt) - birthyear)
-
-hist(trip_age$age, main = &quot;Member Age&quot;, xlab = &quot;Number of Riders&quot;, 
-    col = &quot;#56B4E9&quot;, breaks = 25)</code></pre>
-<p><img src="bicycle_files/figure-html/unnamed-chunk-24-1.png" width="576" style="display: block; margin: auto;" /></p>
-<p>My first instinct here is to say “Wow! There’s a lot of 20 and 30-somethings that use this service!” But this figure (and these data) may be a little misleading. You see, we don’t have any sort of Rider ID number, meaning we can’t take “individual activity level” into account. So we can’t tell if the tallest spike is because 5 very athletic 28-year-olds went on 4,000 trips each, or if 100 people went on 200 trips each, or if there were 20,000 28-year-olds who each only used the service once.</p>
-<p>The same problem would arise if we looked at gender, so I’m just going to move beyond demographics.</p>
-</div>
-<div id="trip-routes" class="section level3">
-<h3>Trip Routes</h3>
-<p>I’m going to do my best to look at some potential routes that these users could have taken, given their start and stop locations and duration. All of these data will be analyzed using the <code>ggmap</code> package and Google Maps API (more info here)</p>
-<p>To start, I need to combine the coordinates of the station (from the <code>station</code> dataset) with the data from the <code>trip</code> dataset. Let’s get started.</p>
-<pre class="r"><code># Create a dataframe with only station ID, latitude, and
-# longitude
-station_coord &lt;- station %&gt;% select(station_id, lat, long)
-
-# Trim our trip dataframe to only include start &amp; stop
-# dates/times, and station ID
-trip_route &lt;- trip_2 %&gt;% select(trip_id, starts_with(&quot;start_&quot;), 
-    starts_with(&quot;stop_&quot;), from_station_id, to_station_id, tripduration)
-
-# Match by station ID
-trip_route$start_lat &lt;- station_coord[match(trip_route$from_station_id, 
-    station_coord$station_id), &quot;lat&quot;]
-
-trip_route$start_long &lt;- station_coord[match(trip_route$from_station_id, 
-    station_coord$station_id), &quot;long&quot;]
-
-trip_route$stop_lat &lt;- station_coord[match(trip_route$to_station_id, 
-    station_coord$station_id), &quot;lat&quot;]
-
-trip_route$stop_long &lt;- station_coord[match(trip_route$to_station_id, 
-    station_coord$station_id), &quot;long&quot;]</code></pre>
-<p>Great! Now to start looking at routes.</p>
-<p>I’ll start by looking at the possible routes of the very first trip.</p>
-<p>Cool! So Google Maps API was able to give us two potential routes for this particular trip. We can make a best guess on which trip was taken by determining the trip duration.</p>
-<pre class="r"><code># Converting trip duration to minutes
-trip_route$tripduration &lt;- trip_route$tripduration/60
-
-# Finding actual trip duration
-trip_route[1, &quot;tripduration&quot;]</code></pre>
-<pre><code>## [1] 16.43225</code></pre>
-<p>Ok, so the actual trip on October 13, 2014 took 16.4 minutes. Let’s see how long each of the hypothetical trips took.</p>
-<p>Hmm, looks like Google estimates those trips should have only taken between 5 and 6 minutes. It is very possible that our user did not go directly from one station to the other. It’s also possible that he got stopped at a few red lights along his route.</p>
-<p>Perhaps this, being the first trip, was a demo of some sort. Let’s check out the last trip that was recorded and see if we still run into the same time disconnect.</p>
-<p>Well this was certainly a longer ride than the first one we looked at!</p>
-<p>How long did this trip take?</p>
-<pre class="r"><code>trip_route[nrow(trip_route), &quot;tripduration&quot;]</code></pre>
-<pre><code>## [1] 299.8445</code></pre>
-<p>Ok, so how long did Google estimate it should take?</p>
-<p>Once again, the trip took quite a bit longer than any of the routes shown here. It’s possible that estimating the routes taken by cyclists is not the best use of this dataset. So, what else is there to look at?</p>
-</div>
-<div id="station-by-trip-departure-and-arrival" class="section level3">
-<h3>Station by Trip Departure and Arrival</h3>
-<p>I suppose we can see which stations have the most trip departures and which have the most arrivals. Unless people are always making round-trip journeys, these are not likely to be equal.</p>
-</div>
-<div id="station-usage" class="section level3">
-<h3>Station Usage</h3>
-<div id="trip-departure" class="section level4">
-<h4>Trip Departure</h4>
-<p>Great, so it looks like the station that sends the highest number of bikes out and takes the highest number of bikes in is located at Pier 69 / Alaskan Way &amp; Clay Street. Looks like this is pretty close to a few parks and several big tourist attractions.</p>
-<p>Also, if you flip between “Departures” and “Arrivals”, you’ll notice that quite a few bikes are picked up in the Capitol Hill area, but are returned down by the coast. If you’re unfamiliar with Seattle’s topography, Capitol Hill is aptly named because it’s situated on a very steep hill. It makes sense that people would borrow bikes to ride down the hill, but not want to borrow a bike to go back up the hill. Interesting!</p>
-</div>
-<div id="trip-arrival" class="section level4">
-<h4>Trip Arrival</h4>
-<p>Great, so it looks like the station that sends the highest number of bikes out and takes the highest number of bikes in is located at Pier 69 / Alaskan Way &amp; Clay Street. Looks like this is pretty close to a few parks and several big tourist attractions.</p>
-<p>Also, if you flip between “Departures” and “Arrivals”, you’ll notice that quite a few bikes are picked up in the Capitol Hill area, but are returned down by the coast. If you’re unfamiliar with Seattle’s topography, Capitol Hill is aptly named because it’s situated on a very steep hill. It makes sense that people would borrow bikes to ride down the hill, but not want to borrow a bike to go back up the hill. Interesting!</p>
-</div>
-</div>
-</div>
-<div id="exploring-the-weather-dataset" class="section level2">
-<h2>Exploring the Weather Dataset</h2>
-<p>Now that I’ve visualized all that I can think of in terms of the “trips” dataset, it’s time to take a brief look at the weather dataset.</p>
-<p>Let’s get a quick reminder of what we’re looking at here.</p>
-<pre class="r"><code>glimpse(weather)</code></pre>
-<pre><code>## Observations: 689
-## Variables: 21
-## $ Date                       &lt;chr&gt; &quot;10/13/2014&quot;, &quot;10/14/2014&quot;, &quot;10/15/...
-## $ Max_Temperature_F          &lt;int&gt; 71, 63, 62, 71, 64, 68, 73, 66, 64,...
-## $ Mean_Temperature_F         &lt;int&gt; 62, 59, 58, 61, 60, 64, 64, 60, 58,...
-## $ Min_TemperatureF           &lt;int&gt; 54, 55, 54, 52, 57, 59, 55, 55, 55,...
-## $ Max_Dew_Point_F            &lt;int&gt; 55, 52, 53, 49, 55, 59, 57, 57, 52,...
-## $ MeanDew_Point_F            &lt;int&gt; 51, 51, 50, 46, 51, 57, 55, 54, 49,...
-## $ Min_Dewpoint_F             &lt;int&gt; 46, 50, 46, 42, 41, 55, 53, 50, 46,...
-## $ Max_Humidity               &lt;int&gt; 87, 88, 87, 83, 87, 90, 94, 90, 87,...
-## $ Mean_Humidity              &lt;int&gt; 68, 78, 77, 61, 72, 83, 74, 78, 70,...
-## $ Min_Humidity               &lt;int&gt; 46, 63, 67, 36, 46, 68, 52, 67, 58,...
-## $ Max_Sea_Level_Pressure_In  &lt;dbl&gt; 30.03, 29.84, 29.98, 30.03, 29.83, ...
-## $ Mean_Sea_Level_Pressure_In &lt;dbl&gt; 29.79, 29.75, 29.71, 29.95, 29.78, ...
-## $ Min_Sea_Level_Pressure_In  &lt;dbl&gt; 29.65, 29.54, 29.51, 29.81, 29.73, ...
-## $ Max_Visibility_Miles       &lt;int&gt; 10, 10, 10, 10, 10, 10, 10, 10, 10,...
-## $ Mean_Visibility_Miles      &lt;int&gt; 10, 9, 9, 10, 10, 8, 10, 10, 10, 6,...
-## $ Min_Visibility_Miles       &lt;int&gt; 4, 3, 3, 10, 6, 2, 6, 5, 6, 2, 10, ...
-## $ Max_Wind_Speed_MPH         &lt;int&gt; 13, 10, 18, 9, 8, 10, 10, 12, 15, 1...
-## $ Mean_Wind_Speed_MPH        &lt;int&gt; 4, 5, 7, 4, 3, 4, 3, 5, 8, 8, 9, 4,...
-## $ Max_Gust_Speed_MPH         &lt;chr&gt; &quot;21&quot;, &quot;17&quot;, &quot;25&quot;, &quot;-&quot;, &quot;-&quot;, &quot;-&quot;, &quot;1...
-## $ Precipitation_In           &lt;dbl&gt; 0.00, 0.11, 0.45, 0.00, 0.14, 0.31,...
-## $ Events                     &lt;chr&gt; &quot;Rain&quot;, &quot;Rain&quot;, &quot;Rain&quot;, &quot;Rain&quot;, &quot;Ra...</code></pre>
 </div>
 </div>
 
