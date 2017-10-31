@@ -1,0 +1,686 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+
+<meta charset="utf-8" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="pandoc" />
+
+
+<meta name="author" content="Samantha Widman, Cathryn Wheeler, Xan Hendrix, Lauren Murray" />
+
+
+<title>Bicycle Sharing in Seattle</title>
+
+<script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/yeti.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<link href="site_libs/highlightjs-1.1/textmate.css" rel="stylesheet" />
+<script src="site_libs/highlightjs-1.1/highlight.js"></script>
+
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css">
+  pre:not([class]) {
+    background-color: white;
+  }
+</style>
+<script type="text/javascript">
+if (window.hljs && document.readyState && document.readyState === "complete") {
+   window.setTimeout(function() {
+      hljs.initHighlighting();
+   }, 0);
+}
+</script>
+
+
+
+<style type="text/css">
+h1 {
+  font-size: 34px;
+}
+h1.title {
+  font-size: 38px;
+}
+h2 {
+  font-size: 30px;
+}
+h3 {
+  font-size: 24px;
+}
+h4 {
+  font-size: 18px;
+}
+h5 {
+  font-size: 16px;
+}
+h6 {
+  font-size: 12px;
+}
+.table th:not([align]) {
+  text-align: left;
+}
+</style>
+
+<link rel="stylesheet" href="styles.css" type="text/css" />
+
+</head>
+
+<body>
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+code {
+  color: inherit;
+  background-color: rgba(0, 0, 0, 0.04);
+}
+img {
+  max-width:100%;
+  height: auto;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+</style>
+
+
+<style type="text/css">
+/* padding for bootstrap navbar */
+body {
+  padding-top: 45px;
+  padding-bottom: 40px;
+}
+/* offset scroll position for anchor links (for fixed navbar)  */
+.section h1 {
+  padding-top: 50px;
+  margin-top: -50px;
+}
+
+.section h2 {
+  padding-top: 50px;
+  margin-top: -50px;
+}
+.section h3 {
+  padding-top: 50px;
+  margin-top: -50px;
+}
+.section h4 {
+  padding-top: 50px;
+  margin-top: -50px;
+}
+.section h5 {
+  padding-top: 50px;
+  margin-top: -50px;
+}
+.section h6 {
+  padding-top: 50px;
+  margin-top: -50px;
+}
+</style>
+
+<script>
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark it active
+  menuAnchor.parent().addClass('active');
+
+  // if it's got a parent navbar menu mark it active as well
+  menuAnchor.closest('li.dropdown').addClass('active');
+});
+</script>
+
+
+<div class="container-fluid main-container">
+
+<!-- tabsets -->
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+</script>
+
+<!-- code folding -->
+
+
+
+
+
+
+<div class="navbar navbar-default  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">Lauren Murray</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li>
+  <a href="index.html">Home</a>
+</li>
+<li>
+  <a href="about.html">About</a>
+</li>
+<li>
+  <a href="Friends_and_Family.html">Friends and Family</a>
+</li>
+<li>
+  <a href="My_Dog.html">My Dog</a>
+</li>
+<li>
+  <a href="hobbies.html">Hobbies</a>
+</li>
+<li>
+  <a href="media.html">Music, Movies, and TV</a>
+</li>
+<li>
+  <a href="Projects.html">Projects</a>
+</li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div class="fluid-row" id="header">
+
+
+
+<h1 class="title toc-ignore">Bicycle Sharing in Seattle</h1>
+<h4 class="author"><em>Samantha Widman, Cathryn Wheeler, Xan Hendrix, Lauren Murray</em></h4>
+<h4 class="date"><em>Oct 31 2017</em></h4>
+
+</div>
+
+<div id="TOC">
+<ul>
+<li><a href="#introduction">Introduction</a><ul>
+<li><a href="#loading-necessary-packages">Loading Necessary Packages</a></li>
+<li><a href="#importing-data">Importing Data</a><ul>
+<li><a href="#data-structures-and-variables">Data Structures and Variables</a></li>
+</ul></li>
+</ul></li>
+<li><a href="#data-visualizations">Data Visualizations</a><ul>
+<li><a href="#exploring-the-stations-dataset">Exploring the Stations Dataset</a><ul>
+<li><a href="#station-installations">Station Installations</a></li>
+<li><a href="#current-station-size">Current Station Size</a></li>
+</ul></li>
+<li><a href="#exploring-the-trips-dataset">Exploring the Trips Dataset</a><ul>
+<li><a href="#plotting-trips-per-month-by-season">Plotting Trips Per Month (By Season)</a></li>
+<li><a href="#average-trip-duration">Average Trip Duration</a></li>
+<li><a href="#number-of-trips-by-day-of-week">Number of Trips by Day of Week</a></li>
+<li><a href="#number-of-trips-by-time-of-day">Number of Trips by Time of Day</a></li>
+<li><a href="#number-of-trips-by-member-type">Number of Trips by Member Type</a></li>
+<li><a href="#trip-duration-by-member-type">Trip Duration by Member Type</a></li>
+<li><a href="#member-demographics">Member Demographics</a></li>
+<li><a href="#trip-routes">Trip Routes</a></li>
+<li><a href="#station-by-trip-departure-and-arrival">Station by Trip Departure and Arrival</a></li>
+<li><a href="#station-usage">Station Usage</a></li>
+</ul></li>
+<li><a href="#exploring-the-weather-dataset">Exploring the Weather Dataset</a></li>
+</ul></li>
+</ul>
+</div>
+
+<div id="introduction" class="section level1">
+<h1>Introduction</h1>
+<p>This is an exploration of bicycle-sharing data in the city of Seattle, WA (USA) from October 2014-August 2016. I hope to eventually combine this data with other forms of ride-sharing and transportation in the city, but this will be the first step.</p>
+<p>Time to get started!</p>
+<div id="loading-necessary-packages" class="section level2">
+<h2>Loading Necessary Packages</h2>
+<pre class="r"><code># For data manipulation and tidying
+library(dplyr)
+library(lubridate)
+library(tidyr)
+
+# For mapping
+library(ggmap)
+library(mapproj)
+
+# For data visualizations
+library(ggplot2)
+
+# For modeling and machine learning
+library(caret)</code></pre>
+</div>
+<div id="importing-data" class="section level2">
+<h2>Importing Data</h2>
+<p>All of the data can be downloaded from the bicycle-sharing service “Pronto!”’s website or from Kaggle. This project contains 3 data sets and I’ll import and inspect each data file independently.</p>
+<pre class="r"><code>station &lt;- read.csv(file = &quot;station.csv&quot;, header = TRUE, 
+    stringsAsFactors = FALSE)
+
+trip &lt;- read.csv(file = &quot;trip.csv&quot;, header = TRUE, 
+    stringsAsFactors = FALSE)
+
+weather &lt;- read.csv(file = &quot;weather.csv&quot;, header = TRUE, 
+    stringsAsFactors = FALSE)</code></pre>
+<p>Okay, let’s take a look at each of these data files.</p>
+<div id="data-structures-and-variables" class="section level3">
+<h3>Data Structures and Variables</h3>
+<div id="station" class="section level4">
+<h4>Station</h4>
+<pre><code>## Observations: 58
+## Variables: 9
+## $ station_id        &lt;chr&gt; &quot;BT-01&quot;, &quot;BT-03&quot;, &quot;BT-04&quot;, &quot;BT-05&quot;, &quot;CBD-03&quot;...
+## $ name              &lt;chr&gt; &quot;3rd Ave &amp; Broad St&quot;, &quot;2nd Ave &amp; Vine St&quot;, &quot;...
+## $ lat               &lt;dbl&gt; 47.61842, 47.61583, 47.61609, 47.61311, 47.6...
+## $ long              &lt;dbl&gt; -122.3510, -122.3486, -122.3411, -122.3442, ...
+## $ install_date      &lt;chr&gt; &quot;10/13/2014&quot;, &quot;10/13/2014&quot;, &quot;10/13/2014&quot;, &quot;1...
+## $ install_dockcount &lt;int&gt; 18, 16, 16, 14, 20, 18, 20, 20, 20, 18, 16, ...
+## $ modification_date &lt;chr&gt; &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;11/9/2015&quot;, &quot;&quot;,...
+## $ current_dockcount &lt;int&gt; 18, 16, 16, 14, 20, 18, 20, 18, 20, 18, 0, 1...
+## $ decommission_date &lt;chr&gt; &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;8/9...</code></pre>
+<p>Looks like this dataset is dealing with 9 variables:</p>
+<ul>
+<li><strong>Station ID</strong> : The individual ID number for a bike station</li>
+<li><strong>Name</strong> : The name of that station ID, also appears to be the rough location of the station</li>
+<li><strong>Latitude</strong> : The latitude of the station</li>
+<li><strong>Longitude</strong> : The longitude of the station</li>
+<li><strong>Install Date</strong> : When that particular station was installed (in MM/DD/YYYY format)</li>
+<li><strong>Install Dock Count</strong> : Number of docks (bike positions) available at each station on installation day</li>
+<li><strong>Modification Date</strong> : When a particular station was modified (in MM/DD/YYYY format)</li>
+<li><strong>Current Dock Count</strong> : Number of docks (bike positions) available at each station on August 31, 2016</li>
+<li><strong>Decommission Date</strong> : The date that a particular station was put out of service (in MM/DD/YYYY format)</li>
+</ul>
+</div>
+<div id="trip" class="section level4">
+<h4>Trip</h4>
+<pre><code>## Observations: 50,793
+## Variables: 12
+## $ trip_id           &lt;int&gt; 431, 432, 433, 434, 435, 436, 437, 438, 439,...
+## $ starttime         &lt;chr&gt; &quot;10/13/2014 10:31&quot;, &quot;10/13/2014 10:32&quot;, &quot;10/...
+## $ stoptime          &lt;chr&gt; &quot;10/13/2014 10:48&quot;, &quot;10/13/2014 10:48&quot;, &quot;10/...
+## $ bikeid            &lt;chr&gt; &quot;SEA00298&quot;, &quot;SEA00195&quot;, &quot;SEA00486&quot;, &quot;SEA0033...
+## $ tripduration      &lt;dbl&gt; 985.935, 926.375, 883.831, 865.937, 923.923,...
+## $ from_station_name &lt;chr&gt; &quot;2nd Ave &amp; Spring St&quot;, &quot;2nd Ave &amp; Spring St&quot;...
+## $ to_station_name   &lt;chr&gt; &quot;Occidental Park / Occidental Ave S &amp; S Wash...
+## $ from_station_id   &lt;chr&gt; &quot;CBD-06&quot;, &quot;CBD-06&quot;, &quot;CBD-06&quot;, &quot;CBD-06&quot;, &quot;CBD...
+## $ to_station_id     &lt;chr&gt; &quot;PS-04&quot;, &quot;PS-04&quot;, &quot;PS-04&quot;, &quot;PS-04&quot;, &quot;PS-04&quot;,...
+## $ usertype          &lt;chr&gt; &quot;Member&quot;, &quot;Member&quot;, &quot;Member&quot;, &quot;Member&quot;, &quot;Mem...
+## $ gender            &lt;chr&gt; &quot;Male&quot;, &quot;Male&quot;, &quot;Female&quot;, &quot;Female&quot;, &quot;Male&quot;, ...
+## $ birthyear         &lt;int&gt; 1960, 1970, 1988, 1977, 1971, 1974, 1978, 19...</code></pre>
+<p>This dataset appears to contain 12 variables:</p>
+<ul>
+<li><strong>Trip ID</strong> : An identification number assigned to each trip (from one bike station to another)</li>
+<li><strong>Start Time</strong> : The time and date that a bike was borrowed from a station (in MM/DD/YYYY HH:MM format)</li>
+<li><strong>Stop Time</strong> : The time and date that a bike was returned to a station (in MM/DD/YYYY HH:MM format)</li>
+<li><strong>Bike ID</strong> : The identification number for a specific bike</li>
+<li><strong>Trip Duration</strong> : Time of trip (measured in seconds)</li>
+<li><strong>From Station Name</strong> : The name of the station where the bike was borrowed from</li>
+<li><strong>To Station Name</strong> : The name of the station where the bike was returned to</li>
+<li><strong>From Station ID</strong> : The ID number of the station where the bike was borrowed from</li>
+<li><strong>To Station ID</strong> : The ID number of the station where the bike was returned to</li>
+<li><strong>User Type</strong> : Indicates whether the user was a “Member” (i.e., someone with a monthly or annual membership to Pronto!) or a “Short-Term Pass Holder” (i.e., someone who purchased a 24 hour or 3 day pass)</li>
+<li><strong>Gender</strong> : The gender of the rider (if known)</li>
+<li><strong>Birth Year</strong> : The year that the rider was born</li>
+</ul>
+</div>
+<div id="weather" class="section level4">
+<h4>Weather</h4>
+<pre><code>## Observations: 689
+## Variables: 21
+## $ Date                       &lt;chr&gt; &quot;10/13/2014&quot;, &quot;10/14/2014&quot;, &quot;10/15/...
+## $ Max_Temperature_F          &lt;int&gt; 71, 63, 62, 71, 64, 68, 73, 66, 64,...
+## $ Mean_Temperature_F         &lt;int&gt; 62, 59, 58, 61, 60, 64, 64, 60, 58,...
+## $ Min_TemperatureF           &lt;int&gt; 54, 55, 54, 52, 57, 59, 55, 55, 55,...
+## $ Max_Dew_Point_F            &lt;int&gt; 55, 52, 53, 49, 55, 59, 57, 57, 52,...
+## $ MeanDew_Point_F            &lt;int&gt; 51, 51, 50, 46, 51, 57, 55, 54, 49,...
+## $ Min_Dewpoint_F             &lt;int&gt; 46, 50, 46, 42, 41, 55, 53, 50, 46,...
+## $ Max_Humidity               &lt;int&gt; 87, 88, 87, 83, 87, 90, 94, 90, 87,...
+## $ Mean_Humidity              &lt;int&gt; 68, 78, 77, 61, 72, 83, 74, 78, 70,...
+## $ Min_Humidity               &lt;int&gt; 46, 63, 67, 36, 46, 68, 52, 67, 58,...
+## $ Max_Sea_Level_Pressure_In  &lt;dbl&gt; 30.03, 29.84, 29.98, 30.03, 29.83, ...
+## $ Mean_Sea_Level_Pressure_In &lt;dbl&gt; 29.79, 29.75, 29.71, 29.95, 29.78, ...
+## $ Min_Sea_Level_Pressure_In  &lt;dbl&gt; 29.65, 29.54, 29.51, 29.81, 29.73, ...
+## $ Max_Visibility_Miles       &lt;int&gt; 10, 10, 10, 10, 10, 10, 10, 10, 10,...
+## $ Mean_Visibility_Miles      &lt;int&gt; 10, 9, 9, 10, 10, 8, 10, 10, 10, 6,...
+## $ Min_Visibility_Miles       &lt;int&gt; 4, 3, 3, 10, 6, 2, 6, 5, 6, 2, 10, ...
+## $ Max_Wind_Speed_MPH         &lt;int&gt; 13, 10, 18, 9, 8, 10, 10, 12, 15, 1...
+## $ Mean_Wind_Speed_MPH        &lt;int&gt; 4, 5, 7, 4, 3, 4, 3, 5, 8, 8, 9, 4,...
+## $ Max_Gust_Speed_MPH         &lt;chr&gt; &quot;21&quot;, &quot;17&quot;, &quot;25&quot;, &quot;-&quot;, &quot;-&quot;, &quot;-&quot;, &quot;1...
+## $ Precipitation_In           &lt;dbl&gt; 0.00, 0.11, 0.45, 0.00, 0.14, 0.31,...
+## $ Events                     &lt;chr&gt; &quot;Rain&quot;, &quot;Rain&quot;, &quot;Rain&quot;, &quot;Rain&quot;, &quot;Ra...</code></pre>
+<p>This dataset represents quite a bit of weather data in 21 variables.</p>
+<ul>
+<li><strong>Date</strong> : The date in MM/DD/YYYY format</li>
+<li><strong>Max Temperature F</strong> : The maximum temperature that day (in degrees F)</li>
+<li><strong>Mean Temperature F</strong> : The average temperature that day (in degrees F)</li>
+<li><strong>Min Temperature F</strong> : The minimum temperature that day (in degrees F)</li>
+<li><strong>Max Dew Point F</strong> : The maximum dew point (in degrees F)</li>
+<li><strong>Mean Dew Point F</strong> : The average dew point (in degrees F)</li>
+<li><strong>Min Dew Point F</strong> : The minimum dew point (in degrees F)</li>
+<li><strong>Max Humidity</strong> : The maximum humidity (in %)</li>
+<li><strong>Mean Humidity</strong> : The average humidity (in %)</li>
+<li><strong>Min Humidity</strong> : The minimum humidity (in %)</li>
+<li><strong>Maximum Sea Level Pressure</strong> : The maximum atmospheric pressure at sea level (in inches of mercury)</li>
+<li><strong>Mean Sea Level Pressure</strong> : The average atmospheric pressure at sea level (in inches of mercury)</li>
+<li><strong>Min Sea Level Pressure</strong> : The minimum atmospheric pressure at sea level (in inches of mercury)</li>
+<li><strong>Max Visibility Miles</strong> : The maximum visibility (in miles)</li>
+<li><strong>Mean Visibility Miles</strong> : The average visibility (in miles)</li>
+<li><strong>Min Visibility Miles</strong> : The minimum visibility (in miles)</li>
+<li><strong>Max Wind Speed MPH</strong> : The maximum sustained wind speed (in miles per hour)</li>
+<li><strong>Mean Wind Speed MPH</strong> : The average sustained wind speed (in miles per hour)</li>
+<li><strong>Max Gust Speed MPH</strong> : The maximum gust wind speed (in miles per hour)</li>
+<li><strong>Precipitation</strong> : The amount of precipitation (measured in inches)</li>
+<li><strong>Events</strong> : Weather events that occurred that day (e.g., rain, fog, snow, thunderstorm etc.)</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div id="data-visualizations" class="section level1">
+<h1>Data Visualizations</h1>
+<div id="exploring-the-stations-dataset" class="section level2">
+<h2>Exploring the Stations Dataset</h2>
+<p>Since the “Stations” dataset was the first one I imported, let’s start with a little exploration there. First of all, how many unique stations are we dealing with?</p>
+<pre class="r"><code>station %&gt;% summarise(n_distinct(station_id))</code></pre>
+<pre><code>##   n_distinct(station_id)
+## 1                     58</code></pre>
+<p>Wow! 58 different stations! Let’s take a quick peek at where they are located.</p>
+<pre class="r"><code>station_locs &lt;- station %&gt;% group_by(station_id) %&gt;% select(1:4, 
+    -2)</code></pre>
+<pre class="r"><code># Load the correct map
+mymap &lt;- get_map(location = &quot;Seattle&quot;, maptype = &quot;roadmap&quot;, zoom = 12)
+
+# Plot a single point for each Station ID
+ggmap(mymap) + geom_point(aes(x = long, y = lat), data = station_locs, 
+    alpha = 0.7, color = &quot;darkred&quot;, size = 2)</code></pre>
+<p><img src="bicycle_files/figure-html/unnamed-chunk-8-1.png" width="576" style="display: block; margin: auto;" /></p>
+<p>So it looks like all of the stations are located near the Lower Queen Anne, Belltown, International District, Capitol Hill and University of Washington areas. Let’s take a more zoomed-in look.</p>
+<pre><code>## Map from URL : http://maps.googleapis.com/maps/api/staticmap?center=47.63,-122.31&amp;zoom=13&amp;size=640x640&amp;scale=2&amp;maptype=roadmap&amp;language=en-EN&amp;sensor=false</code></pre>
+<p><img src="bicycle_files/figure-html/unnamed-chunk-9-1.png" width="576" style="display: block; margin: auto;" /></p>
+<p>Great! So the locations are pretty well clustered. I wonder what order they were added in.</p>
+<div id="station-installations" class="section level3">
+<h3>Station Installations</h3>
+<p>First, let’s convert those character-string date objects to actual dates using the <code>lubridate</code> package.</p>
+<pre class="r"><code>station$install_date &lt;- mdy(station$install_date)
+
+# How many times were new stations installed?
+station %&gt;% summarise(n_distinct(install_date))</code></pre>
+<pre><code>  n_distinct(install_date)
+1                        9</code></pre>
+<pre class="r"><code># How many stations were installed on each date?
+station %&gt;% group_by(install_date) %&gt;% summarise(count = n()) %&gt;% 
+    arrange(install_date)</code></pre>
+<pre><code># A tibble: 9 x 2
+  install_date count
+        &lt;date&gt; &lt;int&gt;
+1   2014-10-13    50
+2   2015-05-22     1
+3   2015-06-12     1
+4   2015-07-27     1
+5   2015-09-15     1
+6   2015-10-29     1
+7   2016-03-18     1
+8   2016-07-03     1
+9   2016-08-09     1</code></pre>
+<p>It looks like the vast majority (86%) of the stations were added on opening day. Let’s see where those original ones were and where the rest were added.</p>
+<p>So they added more stations throughout the district that they serve, instead of adding several new stations to a single neighborhood all at once. Good to know.</p>
+<p>Now, I wonder how many bikes can be parked at each station (as of August 31,2016)?</p>
+<p><img src="bicycle_files/figure-html/unnamed-chunk-11-1.png" width="576" style="display: block; margin: auto;" /></p>
+<p>Well that’s weird, some of the stations have a dock count of 0. I’m assuming they didn’t start that way. Let’s calculate the change in dock count from station installation to August 31, 2016 and plot it on a map.</p>
+<div id="change-in-number-of-bike-docks-per-station" class="section level4">
+<h4>Change in Number of Bike Docks Per Station</h4>
+<p>Any stations with no change in number of docks are not shown here.</p>
+<p><img src="bicycle_files/figure-html/unnamed-chunk-12-1.png" width="576" style="display: block; margin: auto;" /></p>
+<p>Wow! Looks like quite a few stations took away bike docks and none gained any. Perhaps those stations weren’t being used very frequently. We’ll have to look at that a bit later</p>
+</div>
+</div>
+<div id="current-station-size" class="section level3">
+<h3>Current Station Size</h3>
+<p>I’m going to take one quick look at the current size of each station before moving on to the next dataset. Note: I did not include any stations that were closed as of August 31, 2016 in this map</p>
+<pre class="r"><code>ggmap(mymap) + geom_point(aes(x = long, y = lat, size = install_dockcount), data = station, 
+    alpha = 0.7, color = &quot;darkred&quot;)</code></pre>
+<p><img src="bicycle_files/figure-html/unnamed-chunk-13-1.png" width="576" style="display: block; margin: auto;" /></p>
+<p>So it looks like the biggest stations tend to be on the outskirts of the rest. Where there are several stations in close proximity, there tend to be fewer bike docks at each station. That makes sense, logically speaking. If you go to a station and there is no bike to rent, you can easily go to another nearby, assuming there is another nearby. In areas where the stations are more secluded, it’s more important that there be bikes and open spaces readily available for users.</p>
+<p>Alright, I’m feeling good about exploring this dataset. Time to check out the trip dataset!</p>
+</div>
+</div>
+<div id="exploring-the-trips-dataset" class="section level2">
+<h2>Exploring the Trips Dataset</h2>
+<p>It’s been a while since we’ve looked at the trip dataset, so let’s take another peek at it here.</p>
+<pre class="r"><code>glimpse(trip)</code></pre>
+<pre><code>## Observations: 50,793
+## Variables: 12
+## $ trip_id           &lt;int&gt; 431, 432, 433, 434, 435, 436, 437, 438, 439,...
+## $ starttime         &lt;chr&gt; &quot;10/13/2014 10:31&quot;, &quot;10/13/2014 10:32&quot;, &quot;10/...
+## $ stoptime          &lt;chr&gt; &quot;10/13/2014 10:48&quot;, &quot;10/13/2014 10:48&quot;, &quot;10/...
+## $ bikeid            &lt;chr&gt; &quot;SEA00298&quot;, &quot;SEA00195&quot;, &quot;SEA00486&quot;, &quot;SEA0033...
+## $ tripduration      &lt;dbl&gt; 985.935, 926.375, 883.831, 865.937, 923.923,...
+## $ from_station_name &lt;chr&gt; &quot;2nd Ave &amp; Spring St&quot;, &quot;2nd Ave &amp; Spring St&quot;...
+## $ to_station_name   &lt;chr&gt; &quot;Occidental Park / Occidental Ave S &amp; S Wash...
+## $ from_station_id   &lt;chr&gt; &quot;CBD-06&quot;, &quot;CBD-06&quot;, &quot;CBD-06&quot;, &quot;CBD-06&quot;, &quot;CBD...
+## $ to_station_id     &lt;chr&gt; &quot;PS-04&quot;, &quot;PS-04&quot;, &quot;PS-04&quot;, &quot;PS-04&quot;, &quot;PS-04&quot;,...
+## $ usertype          &lt;chr&gt; &quot;Member&quot;, &quot;Member&quot;, &quot;Member&quot;, &quot;Member&quot;, &quot;Mem...
+## $ gender            &lt;chr&gt; &quot;Male&quot;, &quot;Male&quot;, &quot;Female&quot;, &quot;Female&quot;, &quot;Male&quot;, ...
+## $ birthyear         &lt;int&gt; 1960, 1970, 1988, 1977, 1971, 1974, 1978, 19...</code></pre>
+<p>Great, so there are quite a few things that we can potentially look at using this dataset by itself. Let’s start with the number of trips per day since Pronto! began opening bike stations. To do that, we need to recode our start date/times as POSIXct objects. We’ll use the <code>lubridate</code> package for this.</p>
+<pre class="r"><code># Make the start and stop dates into POSIXct objects
+trip_2 &lt;- trip %&gt;% mutate(start_dt = mdy_hm(starttime), stop_dt = mdy_hm(stoptime))
+
+# Recode the dates
+trip_2 &lt;- trip_2 %&gt;% mutate(start_date = paste(month(start_dt), 
+    day(start_dt), year(start_dt), sep = &quot;/&quot;))
+trip_2$start_date &lt;- mdy(trip_2$start_date)
+
+trip_2 &lt;- trip_2 %&gt;% mutate(stop_date = paste(month(stop_dt), 
+    day(stop_dt), year(stop_dt), sep = &quot;/&quot;))
+trip_2$stop_date &lt;- mdy(trip_2$stop_date)</code></pre>
+<p>Great! Time to visualize the number of rides per day.</p>
+<p><img src="bicycle_files/figure-html/unnamed-chunk-16-1.png" width="576" style="display: block; margin: auto;" /></p>
+<p>Hmm, grouping by day is a little noisy. Perhaps we should try by month?</p>
+<div id="plotting-trips-per-month-by-season" class="section level3">
+<h3>Plotting Trips Per Month (By Season)</h3>
+<p>First, we need to create a “Year-Month” variable</p>
+<pre class="r"><code>start_date_ym &lt;- trip_2 %&gt;% mutate(ym = paste(year(start_date), 
+    month(start_date), sep = &quot;/&quot;), Season = ifelse(ym %in% c(&quot;2014/10&quot;, &quot;2014/11&quot;), &quot;Fall&quot;, ifelse(ym %in% c(&quot;2014/12&quot;, &quot;2015/1&quot;, &quot;2015/2&quot;), &quot;Winter&quot;, ifelse(ym %in% c(&quot;2015/3&quot;, &quot;2015/4&quot;, &quot;2015/5&quot;), &quot;Spring&quot;, &quot;Summer&quot;))))</code></pre>
+<p>Now plot. I think I’ll plot this by month but color it by season (where December, January, and February are “winter”, March, April, and May are “spring”, June, July, August are “summer”, and September, October, November are “autumn”)</p>
+<p><img src="bicycle_files/figure-html/unnamed-chunk-18-1.png" width="576" style="display: block; margin: auto;" /></p>
+<p>Well that intuitively makes sense. The number of trips taken per month increases in the spring, reaches a maximum in the summer, declines through the fall, remains fairly stable in the winter and then repeats.</p>
+</div>
+<div id="average-trip-duration" class="section level3">
+<h3>Average Trip Duration</h3>
+<p>Great! I wonder how the average trip duration fluctuates over this time period.</p>
+<pre class="r"><code># Convert Trip Duration from Seconds to Minutes
+Trip_Duration_Month &lt;- start_date_ym %&gt;% mutate(trip_duration_min = tripduration/60) %&gt;% 
+    group_by(ym) %&gt;% select(ym, trip_duration_min, Season) %&gt;% summarise(Avg = mean(trip_duration_min), 
+    sd = sd(trip_duration_min)) %&gt;% mutate(se = sd/sqrt(n()),Season = ifelse(ym %in% c(&quot;2014/10&quot;, &quot;2014/11&quot;), &quot;Fall&quot;, ifelse(ym %in% c(&quot;2014/12&quot;, &quot;2015/1&quot;, &quot;2015/2&quot;), &quot;Winter&quot;, ifelse(ym %in% c(&quot;2015/3&quot;, &quot;2015/4&quot;, &quot;2015/5&quot;), &quot;Spring&quot;, &quot;Summer&quot;))))
+ggplot(Trip_Duration_Month,aes(x = ym, y = Avg, color = Season)) + geom_point() + geom_line(aes(group = 1)) + labs(x = &quot;Date&quot;, y = &quot;Average Trip Duration (In Minutes)&quot;) + theme_bw() + geom_errorbar(aes(ymin = Avg - se, ymax = Avg + se))</code></pre>
+<p><img src="bicycle_files/figure-html/unnamed-chunk-19-1.png" width="576" style="display: block; margin: auto;" /></p>
+<p>There’s surprisingly not a huge range in trip durations here.</p>
+<p>The little bit of variation here makes logical sense. Longer trips were being taken in the spring and summer months rather than the fall and winter. It’s also notable that the spring and summer of 2016 may have shown fewer trips than the previous year, show a slight increase in average trip length.</p>
+</div>
+<div id="number-of-trips-by-day-of-week" class="section level3">
+<h3>Number of Trips by Day of Week</h3>
+<p>I wonder if people are using this service to commute to/from work. Let’s look at the number of trips by day of the week.</p>
+<p>First, let’s create a Day of the Week variable.</p>
+<pre class="r"><code>start_date_ym$wd &lt;- wday(start_date_ym$start_date, label = TRUE)</code></pre>
+<p>Now to plot the total number of trips by day of the week.</p>
+<p>Ok, so there are definitely more trips during the week than on the weekends. I wonder if this varies by season too.</p>
+<pre class="r"><code>start_date_ym%&gt;%
+  group_by(wd, Season) %&gt;%
+  summarize(N = n()) %&gt;%
+ggplot(aes(x = wd, y = N, color = Season, group = Season)) + geom_point() + geom_line() + labs(x = &quot;Day of the Week&quot;, y = &quot;Number of trips&quot;) + theme_bw()</code></pre>
+<p><img src="bicycle_files/figure-html/unnamed-chunk-21-1.png" width="576" style="display: block; margin: auto;" /></p>
+<p>So it looks like usage is relatively consistent across seasons, at least as far as the number of trips are concerned.</p>
+</div>
+<div id="number-of-trips-by-time-of-day" class="section level3">
+<h3>Number of Trips by Time of Day</h3>
+<p>How about time of day? Are people using these around commuting times during the week and later on weekends?</p>
+<p>Wow, looks like regardless of the season, people are commuting to/from work using this service (there’s a spike between 8 and 10 AM and another between 4 and 7 PM Monday through Friday). But the weekends seem to be popular between 10 AM and 10 PM.</p>
+</div>
+<div id="number-of-trips-by-member-type" class="section level3">
+<h3>Number of Trips by Member Type</h3>
+<p>I wonder if different types of members (those who have a membership vs. those that bought a 24 hour or 3 day pass) vary in the number of trips they take.</p>
+<p>If I were to guess, I’d think the short-term passes would be ideal for tourists or people looking for a quick weekend trip, whereas members may be more likely to continue using the service year-round. Let’s check out my assumptions by plotting, once again colored by season.</p>
+<p>Surprisingly (to me, at least), different types of users seem to follow similar patterns of usage. Spring and Summer are definitely the most popular times for anyone to ride a bike in the Seattle area.</p>
+</div>
+<div id="trip-duration-by-member-type" class="section level3">
+<h3>Trip Duration by Member Type</h3>
+<p>While it may seem that the trip duration shouldn’t vary widely by member type, a quick look at Pronto!’s pricing structure may make you reconsider that assumption. You see, while you have to purchase either an annual membership ($85/year), a 24-Hour Pass ($8) or a 3-Day Pass ($16) there is still a cap on the duration of your trip. For members, any ride under 45 minutes is free, but any ride going over 45 minutes will incur a fee of $2 for every additional 30 minutes. For short-term users, any ride under 30 minutes is free, but going over that time limit would cost you an additional $2 for the first 30 minutes and $5 for each additional 30 minutes after that!</p>
+<p>Let’s see if these time limits cause differing behaviors in our users.</p>
+<p>Ok, so our members are pretty good about making sure that they return their bike before they incur extra charges, but the short-term pass holders frequently go over their time limit. I wonder how the cost of a trip varies for members and pass holders. Let’s try to calculate the cost of a trip.</p>
+<p>That was a complicated nested if/else statement! Let’s see how much these folks are paying in additional fees!</p>
+<p>Looks like short-term pass holders (who are already paying a higher price per day of biking), are also paying lots of extra fees. This could be because they are unfamiliar with the pricing structure and don’t realize they need to return their bike to a station within 30 minutes without getting charged. It is also possible that short-term users may be tourists who don’t know their way around as easily, and thus can’t find their way to a station within the time limit.</p>
+</div>
+<div id="member-demographics" class="section level3">
+<h3>Member Demographics</h3>
+<p>We only seem to have age and gender information about people who have an annual Pronto! membership, so we can at least take a look at what types of people use this service.</p>
+<p>Let’s look first at age.</p>
+<pre class="r"><code>trip_2$usertype &lt;- as.factor(trip_2$usertype)
+trip_age &lt;- trip_2 %&gt;% mutate(age = year(start_dt) - birthyear)
+
+hist(trip_age$age, main = &quot;Member Age&quot;, xlab = &quot;Number of Riders&quot;, 
+    col = &quot;#56B4E9&quot;, breaks = 25)</code></pre>
+<p><img src="bicycle_files/figure-html/unnamed-chunk-24-1.png" width="576" style="display: block; margin: auto;" /></p>
+<p>My first instinct here is to say “Wow! There’s a lot of 20 and 30-somethings that use this service!” But this figure (and these data) may be a little misleading. You see, we don’t have any sort of Rider ID number, meaning we can’t take “individual activity level” into account. So we can’t tell if the tallest spike is because 5 very athletic 28-year-olds went on 4,000 trips each, or if 100 people went on 200 trips each, or if there were 20,000 28-year-olds who each only used the service once.</p>
+<p>The same problem would arise if we looked at gender, so I’m just going to move beyond demographics.</p>
+</div>
+<div id="trip-routes" class="section level3">
+<h3>Trip Routes</h3>
+<p>I’m going to do my best to look at some potential routes that these users could have taken, given their start and stop locations and duration. All of these data will be analyzed using the <code>ggmap</code> package and Google Maps API (more info here)</p>
+<p>To start, I need to combine the coordinates of the station (from the <code>station</code> dataset) with the data from the <code>trip</code> dataset. Let’s get started.</p>
+<pre class="r"><code># Create a dataframe with only station ID, latitude, and
+# longitude
+station_coord &lt;- station %&gt;% select(station_id, lat, long)
+
+# Trim our trip dataframe to only include start &amp; stop
+# dates/times, and station ID
+trip_route &lt;- trip_2 %&gt;% select(trip_id, starts_with(&quot;start_&quot;), 
+    starts_with(&quot;stop_&quot;), from_station_id, to_station_id, tripduration)
+
+# Match by station ID
+trip_route$start_lat &lt;- station_coord[match(trip_route$from_station_id, 
+    station_coord$station_id), &quot;lat&quot;]
+
+trip_route$start_long &lt;- station_coord[match(trip_route$from_station_id, 
+    station_coord$station_id), &quot;long&quot;]
+
+trip_route$stop_lat &lt;- station_coord[match(trip_route$to_station_id, 
+    station_coord$station_id), &quot;lat&quot;]
+
+trip_route$stop_long &lt;- station_coord[match(trip_route$to_station_id, 
+    station_coord$station_id), &quot;long&quot;]</code></pre>
+<p>Great! Now to start looking at routes.</p>
+<p>I’ll start by looking at the possible routes of the very first trip.</p>
+<p>Cool! So Google Maps API was able to give us two potential routes for this particular trip. We can make a best guess on which trip was taken by determining the trip duration.</p>
+<pre class="r"><code># Converting trip duration to minutes
+trip_route$tripduration &lt;- trip_route$tripduration/60
+
+# Finding actual trip duration
+trip_route[1, &quot;tripduration&quot;]</code></pre>
+<pre><code>## [1] 16.43225</code></pre>
+<p>Ok, so the actual trip on October 13, 2014 took 16.4 minutes. Let’s see how long each of the hypothetical trips took.</p>
+<p>Hmm, looks like Google estimates those trips should have only taken between 5 and 6 minutes. It is very possible that our user did not go directly from one station to the other. It’s also possible that he got stopped at a few red lights along his route.</p>
+<p>Perhaps this, being the first trip, was a demo of some sort. Let’s check out the last trip that was recorded and see if we still run into the same time disconnect.</p>
+<p>Well this was certainly a longer ride than the first one we looked at!</p>
+<p>How long did this trip take?</p>
+<pre class="r"><code>trip_route[nrow(trip_route), &quot;tripduration&quot;]</code></pre>
+<pre><code>## [1] 299.8445</code></pre>
+<p>Ok, so how long did Google estimate it should take?</p>
+<p>Once again, the trip took quite a bit longer than any of the routes shown here. It’s possible that estimating the routes taken by cyclists is not the best use of this dataset. So, what else is there to look at?</p>
+</div>
+<div id="station-by-trip-departure-and-arrival" class="section level3">
+<h3>Station by Trip Departure and Arrival</h3>
+<p>I suppose we can see which stations have the most trip departures and which have the most arrivals. Unless people are always making round-trip journeys, these are not likely to be equal.</p>
+</div>
+<div id="station-usage" class="section level3">
+<h3>Station Usage</h3>
+<div id="trip-departure" class="section level4">
+<h4>Trip Departure</h4>
+<p>Great, so it looks like the station that sends the highest number of bikes out and takes the highest number of bikes in is located at Pier 69 / Alaskan Way &amp; Clay Street. Looks like this is pretty close to a few parks and several big tourist attractions.</p>
+<p>Also, if you flip between “Departures” and “Arrivals”, you’ll notice that quite a few bikes are picked up in the Capitol Hill area, but are returned down by the coast. If you’re unfamiliar with Seattle’s topography, Capitol Hill is aptly named because it’s situated on a very steep hill. It makes sense that people would borrow bikes to ride down the hill, but not want to borrow a bike to go back up the hill. Interesting!</p>
+</div>
+<div id="trip-arrival" class="section level4">
+<h4>Trip Arrival</h4>
+<p>Great, so it looks like the station that sends the highest number of bikes out and takes the highest number of bikes in is located at Pier 69 / Alaskan Way &amp; Clay Street. Looks like this is pretty close to a few parks and several big tourist attractions.</p>
+<p>Also, if you flip between “Departures” and “Arrivals”, you’ll notice that quite a few bikes are picked up in the Capitol Hill area, but are returned down by the coast. If you’re unfamiliar with Seattle’s topography, Capitol Hill is aptly named because it’s situated on a very steep hill. It makes sense that people would borrow bikes to ride down the hill, but not want to borrow a bike to go back up the hill. Interesting!</p>
+</div>
+</div>
+</div>
+<div id="exploring-the-weather-dataset" class="section level2">
+<h2>Exploring the Weather Dataset</h2>
+<p>Now that I’ve visualized all that I can think of in terms of the “trips” dataset, it’s time to take a brief look at the weather dataset.</p>
+<p>Let’s get a quick reminder of what we’re looking at here.</p>
+<pre class="r"><code>glimpse(weather)</code></pre>
+<pre><code>## Observations: 689
+## Variables: 21
+## $ Date                       &lt;chr&gt; &quot;10/13/2014&quot;, &quot;10/14/2014&quot;, &quot;10/15/...
+## $ Max_Temperature_F          &lt;int&gt; 71, 63, 62, 71, 64, 68, 73, 66, 64,...
+## $ Mean_Temperature_F         &lt;int&gt; 62, 59, 58, 61, 60, 64, 64, 60, 58,...
+## $ Min_TemperatureF           &lt;int&gt; 54, 55, 54, 52, 57, 59, 55, 55, 55,...
+## $ Max_Dew_Point_F            &lt;int&gt; 55, 52, 53, 49, 55, 59, 57, 57, 52,...
+## $ MeanDew_Point_F            &lt;int&gt; 51, 51, 50, 46, 51, 57, 55, 54, 49,...
+## $ Min_Dewpoint_F             &lt;int&gt; 46, 50, 46, 42, 41, 55, 53, 50, 46,...
+## $ Max_Humidity               &lt;int&gt; 87, 88, 87, 83, 87, 90, 94, 90, 87,...
+## $ Mean_Humidity              &lt;int&gt; 68, 78, 77, 61, 72, 83, 74, 78, 70,...
+## $ Min_Humidity               &lt;int&gt; 46, 63, 67, 36, 46, 68, 52, 67, 58,...
+## $ Max_Sea_Level_Pressure_In  &lt;dbl&gt; 30.03, 29.84, 29.98, 30.03, 29.83, ...
+## $ Mean_Sea_Level_Pressure_In &lt;dbl&gt; 29.79, 29.75, 29.71, 29.95, 29.78, ...
+## $ Min_Sea_Level_Pressure_In  &lt;dbl&gt; 29.65, 29.54, 29.51, 29.81, 29.73, ...
+## $ Max_Visibility_Miles       &lt;int&gt; 10, 10, 10, 10, 10, 10, 10, 10, 10,...
+## $ Mean_Visibility_Miles      &lt;int&gt; 10, 9, 9, 10, 10, 8, 10, 10, 10, 6,...
+## $ Min_Visibility_Miles       &lt;int&gt; 4, 3, 3, 10, 6, 2, 6, 5, 6, 2, 10, ...
+## $ Max_Wind_Speed_MPH         &lt;int&gt; 13, 10, 18, 9, 8, 10, 10, 12, 15, 1...
+## $ Mean_Wind_Speed_MPH        &lt;int&gt; 4, 5, 7, 4, 3, 4, 3, 5, 8, 8, 9, 4,...
+## $ Max_Gust_Speed_MPH         &lt;chr&gt; &quot;21&quot;, &quot;17&quot;, &quot;25&quot;, &quot;-&quot;, &quot;-&quot;, &quot;-&quot;, &quot;1...
+## $ Precipitation_In           &lt;dbl&gt; 0.00, 0.11, 0.45, 0.00, 0.14, 0.31,...
+## $ Events                     &lt;chr&gt; &quot;Rain&quot;, &quot;Rain&quot;, &quot;Rain&quot;, &quot;Rain&quot;, &quot;Ra...</code></pre>
+</div>
+</div>
+
+<p>Copyright &copy; 2017 Lauren Murray. All rights reserved.</p>
+
+
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>
