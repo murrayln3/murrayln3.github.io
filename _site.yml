@@ -7,15 +7,13 @@ navbar:
       href: index.html 
     - text: "About" 
       href: about.html 
-    - text: "My Dog" 
-      href: My_Dog.html 
     - text: "Resume" 
       href: hobbies.html
     - text: "Projects"
       href: Projects.html
 output: 
   html_document: 
-    theme: superhero 
+    theme: flatly 
     highlight: textmate
     include: 
       after_body: footer.html
