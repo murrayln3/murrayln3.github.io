@@ -9,7 +9,7 @@ navbar:
       href: about.html 
     - text: "My Dog" 
       href: My_Dog.html 
-    - text: "Resume/CV" 
+    - text: "Resume" 
       href: hobbies.html
     - text: "Projects"
       href: Projects.html
