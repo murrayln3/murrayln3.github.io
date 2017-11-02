@@ -9,10 +9,8 @@ navbar:
       href: about.html 
     - text: "My Dog" 
       href: My_Dog.html 
-    - text: "Hobbies" 
+    - text: "Resume/CV" 
       href: hobbies.html
-    - text: "Music, Movies, and TV"
-      href: media.html
     - text: "Projects"
       href: Projects.html
 output: 
