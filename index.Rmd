@@ -3,7 +3,7 @@ title: "Welcome!"
 output: html_document
 ---
 
-Welcome to my website! My name is Lauren Murray. Click through the menu to learn a little more about me, see cute pictures of my dog, download my CV, and view my previous projects.
+Welcome to my website! My name is Lauren Murray, and I am senior mathematics major here at Appalachian State University. Click through the menu to learn a little more about me, see cute pictures of my dog, download my CV, and view my previous projects.
 
 ```{r, echo = FALSE}
 knitr::include_graphics("./app state image.jpg")

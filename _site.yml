@@ -15,7 +15,7 @@ navbar:
       href: Projects.html
 output: 
   html_document: 
-    theme: yeti 
+    theme: superhero 
     highlight: textmate
     include: 
       after_body: footer.html
