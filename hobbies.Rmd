@@ -1,6 +1,8 @@
 ---
-title: "My Hobbies"
-output: html_document
+title: "Resume"
+output: 
+  html_document: 
+    theme: flatly
 ---
 
 ```{r setup, include=FALSE}

@@ -1,7 +1,8 @@
 ---
 title: "My Dog"
-
-output: html_document
+output: 
+  html_document: 
+    theme: flatly
 ---
 
 This page is dedicated to my sweet girl Quinn! I rescued her some people in my howetown who didn't take very good care of her. I have had her for about a year, and she is 1.5 years old now. She is a black and tan and english coonhound mix, and she is a sweet little angel baby! Please scroll through my page to see how cute and funny she is. 

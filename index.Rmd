@@ -1,6 +1,8 @@
 ---
 title: "Welcome!"
-output: html_document
+output: 
+  html_document: 
+    theme: flatly
 ---
 
 Welcome to my website! My name is Lauren Murray, and I am senior mathematics major here at Appalachian State University. Click through the menu to learn a little more about me, download my resume, and view my previous projects.

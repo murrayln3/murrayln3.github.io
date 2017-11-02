@@ -2,7 +2,9 @@
 title: "Projects"
 author: "Lauren Murray"
 date: "10/31/2017"
-output: html_document
+output: 
+  html_document: 
+    theme: flatly
 ---
 
 ```{r setup, include=FALSE}

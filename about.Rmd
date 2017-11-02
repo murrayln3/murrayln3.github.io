@@ -1,6 +1,8 @@
 ---
 title: "About Me"
-output: html_document
+output: 
+  html_document: 
+    theme: flatly
 --- 
 
 Hello! I am a senior mathematics major here at App State. My hobbies include hiking, running,and hanging out with my friends and my dog. I have included some pictures of my life.
