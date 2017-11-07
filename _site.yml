@@ -11,9 +11,10 @@ navbar:
       href: hobbies.html
     - text: "Projects"
       href: Projects.html
+      
   right: 
     - icon: fa-github
-      href: https://github.com
+      href: https://www.github.com
 output: 
   html_document: 
     theme: flatly 
