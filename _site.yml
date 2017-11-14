@@ -16,7 +16,7 @@ navbar:
     - icon: fa-github
       href: https://github.com/murrayln3/murrayln3.github.io
     - icon: fa-linkedin 
-      href: https://linkedin.com
+      href: https://www.linkedin.com/in/lauren-murray333/
 output: 
   html_document: 
     theme: flatly 
