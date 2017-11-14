@@ -8,10 +8,5 @@ output:
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 ```
-
-This will be where my resume will go, along with linkedin. 
-```{r, echo = FALSE}
-knitr::include_graphics("./app state image.jpg")
-
-```
+* [Click to Download Resume](./bicycle.html)
 

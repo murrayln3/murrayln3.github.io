@@ -5,7 +5,8 @@ output:
     theme: flatly
 --- 
 
-Hello! I am a senior mathematics major here at App State. My hobbies include hiking, running,and hanging out with my friends and my dog. I have included some pictures of my life.
+Hello! I am a senior mathematics major here at App State. My hobbies include hiking, running,and hanging out with my friends and my dog.
+
 ```{r, echo = FALSE}
 knitr::include_graphics("./app state image.jpg")
 
