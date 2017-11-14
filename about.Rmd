@@ -1,7 +1,6 @@
 ---
 title: "About Me"
 output:
-  pdf_document: default
   html_document:
     theme: flatly
 --- 
