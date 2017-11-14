@@ -14,7 +14,7 @@ navbar:
       
   right: 
     - icon: fa-github
-      href: https://www.github.com
+      href: https://github.com/murrayln3/murrayln3.github.io
     - icon: fa-linkedin 
       href: https://linkedin.com
 output: 
