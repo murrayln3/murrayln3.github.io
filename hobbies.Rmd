@@ -8,5 +8,5 @@ output:
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 ```
-* [Click to Download Resume](./bicycle.html)
+* [Click to view full CV/Resume](./CV_2017.pdf)
 
