@@ -11,4 +11,9 @@ output:
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-* [Bicycle Project](./bicycle.html)
+* [Bicycle Project](./bicycle.html) 
+* [Random Number Generators](./Random_Number_Generators.pdf) 
+* [Max-Plus Algebra with Applications](./S_STEM_Tropical_Presentation.pdf) 
+* [Stereotype Threat and Perceptions of Mathematics Experiences](./Stereotype Threat and Perceptions of Mathematics Experiences.pdf) 
+* [Chaos Theory With Applications to Art and Programming](./Chaos Theory With Applications to ArtProgramming.pdf) 
+
