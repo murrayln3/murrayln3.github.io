@@ -16,4 +16,5 @@ knitr::opts_chunk$set(echo = TRUE)
 * [Max-Plus Algebra with Applications](./S_STEM_Tropical_Presentation.pdf) 
 * [Stereotype Threat and Perceptions of Mathematics Experiences](./Stereotype Threat and Perceptions of Mathematics Experiences.pdf) 
 * [Chaos Theory With Applications to Art and Programming](./Chaos Theory With Applications to ArtProgramming.pdf) 
+* [Final Presentation STT 3530](./Presentation_STT_3830.html)
 
